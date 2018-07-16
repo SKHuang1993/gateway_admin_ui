@@ -241,6 +241,7 @@
                       {parameter:{name:'',source:'',index:0},required:false,rules:[]}
                     ],
                     defaultValue:{
+                      code:200,
                       body:'eyJjb2RlIjoyMDAsImRhdGEiOiIiLCJtc2ciOiLmnI3liqHlvILluLjvvIzor7fph43mlrDlsJ3or5UifQ==',
                       headers:[
                         {name:'Location',value:''}
