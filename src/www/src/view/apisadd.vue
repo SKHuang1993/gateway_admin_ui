@@ -370,6 +370,9 @@
             }
 
             this.form.nodes.forEach(function (items,index) {
+
+                items.defaultValue.defaultValue.code = 200;
+
                 if(items.defaultValue.headers[0].value == ''){
                   delete items.defaultValue.headers;
                 }

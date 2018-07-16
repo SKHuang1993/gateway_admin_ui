@@ -316,6 +316,7 @@
           }
 
           res.data.data.nodes.forEach(function (items,index) {
+            items.defaultValue.defaultValue.code = 200;
             if(!items.defaultValue.headers){
               items.defaultValue.headers = [];
               items.defaultValue.headers[0] = {name:'Location',value:''}
@@ -428,6 +429,7 @@
         }
 
         this.form.nodes.forEach(function (items,index) {
+          items.defaultValue.defaultValue.code = 200;
           if(items.defaultValue.headers[0].value == ''){
             items.defaultValue.headers = [];
           }
