@@ -319,7 +319,7 @@
             }).catch(() => {});
           },
           ADD_JIEDIAN(){
-            this.form.nodes.push({clusterID:'', urlRewrite:'', attrName:'', validations:[{parameter:{name:'',source:'',index:0},required:false,rules:[]}], defaultValue:{body:'',headers:[{name:'Location',value:''}]}});
+            this.form.nodes.push({clusterID:'', urlRewrite:'', attrName:'', validations:[{parameter:{name:'',source:'',index:0},required:false,rules:[]}], defaultValue:{code:200,body:'',headers:[{name:'Location',value:''}]}});
           },
           DEL_JIEDIAN(index){
             this.$confirm('是否确定移除?', '移除操作', {
