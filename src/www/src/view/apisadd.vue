@@ -24,9 +24,9 @@
         <el-input  v-model="form.defaultValue.body" auto-complete="off" placeholder="当后端Cluster无可用Server的时候，返回默认值(json格式BASE64数据)"></el-input>
       </el-form-item>
 
-      <!--<el-form-item label="接口默认跳转">
+      <el-form-item label="接口默认跳转">
         <el-input  v-model="form.defaultValue.headers[0].value" auto-complete="off" placeholder="当后端Cluster无可用Server的时候，跳转到设定的网址"></el-input>
-      </el-form-item>-->
+      </el-form-item>
 
       <el-form-item label="Auth插件名称" prop="authFilter">
         <el-input  v-model="form.authFilter" auto-complete="off" placeholder="指定该API所使用的Auth插件名称，例如：CUSTOM_JWT"></el-input>
@@ -226,6 +226,7 @@
                   blacklist:[]
                 },
                 defaultValue:{
+                  code:200,
                   body:'eyJjb2RlIjoyMDAsImRhdGEiOiIiLCJtc2ciOiLmnI3liqHlvILluLjvvIzor7fph43mlrDlsJ3or5UifQ==',
                   headers:[
                     {name:'Location',value:''}
@@ -371,7 +372,7 @@
 
             this.form.nodes.forEach(function (items,index) {
 
-                items.defaultValue.defaultValue.code = 200;
+                items.defaultValue.code = 200;
 
                 if(items.defaultValue.headers[0].value == ''){
                   delete items.defaultValue.headers;
@@ -384,6 +385,8 @@
 
             if(this.form.defaultValue.headers[0].value == ''){
               delete this.form.defaultValue.headers;
+            }else{
+              this.form.defaultValue.code = 301;
             }
 
             ApisCreate(data).then(res=>{
