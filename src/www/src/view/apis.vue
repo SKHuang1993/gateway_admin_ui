@@ -29,7 +29,7 @@
       </el-table-column>
       <el-table-column label="接口聚合" >
         <template slot-scope="scope">
-          <span>{{ scope.row.nodes.length }}</span>
+          <el-tag :type="scope.row.nodes.length == 1 ? 'primary' : 'success'" disable-transitions>{{ scope.row.nodes.length }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="开关状态" >
@@ -63,6 +63,7 @@
         methods: {
           init(){
             Apis().then(res=>{
+              console.log(res)
               this.tableData = res.data.data;
             })
           },
