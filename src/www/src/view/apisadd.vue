@@ -161,9 +161,12 @@
 
       <el-form-item label="聚合数据集" style="width: 800px" v-if="form.nodes.length > 1">
         <el-row style="width: 700px">
-          <div class="grid-content">
-            <el-card class="box-card bg-purple-dark" v-for="(item,index) in form.renderTemplate.objects" :key="index">
+          <div class="grid-content" v-for="(item,index) in form.renderTemplate.objects" :key="index">
+            <el-card class="box-card bg-purple-dark">
               <el-form-item>
+                <div class="grid-content bg-purple" style="padding:5px 0;width: 200px;float: left">
+                  <el-input  v-model="item.name" auto-complete="off" placeholder="请输入字段名称"></el-input>
+                </div>
                 <a style="float: right;font-size: 12px;color: #999999;cursor: pointer" @click="ADD_ATTR(index)"><i class="el-icon-plus"></i>添加字段</a>
               </el-form-item>
               <el-row v-for="(items,indexs) in item.attrs" :key="indexs">
@@ -179,9 +182,17 @@
                   </div>
                 </el-col>
               </el-row>
+              <el-form-item>
+                <a style="float: right;font-size: 12px;color: #999999;cursor: pointer" @click="DEL_SHUJUJIEGOU(index)" v-if="index > 0"><i class="el-icon-pluss"></i>移除数据结构</a>
+              </el-form-item>
             </el-card>
           </div>
         </el-row>
+        <el-col >
+          <div class="grid-content bg-purple" style="padding: 0 5px;text-align: right;width: 890px">
+            <el-button class="add" type="primary" icon="el-icon-plus" @click="ADD_SHUJUJIEGOU()">新增数据结构</el-button>
+          </div>
+        </el-col>
       </el-form-item>
 
       <el-form-item label="状态开关" prop="status">
@@ -358,6 +369,19 @@
               this.form.renderTemplate.objects[index].attrs.splice(indexs,1);
             }).catch(() => {});
           },
+          ADD_SHUJUJIEGOU(){
+            this.form.renderTemplate.objects.push({name:'', attrs:[{name:'', extractExp:''}], flatAttrs:true})
+          },
+          DEL_SHUJUJIEGOU(index){
+            this.$confirm('是否确定移除?', '移除操作', {
+              confirmButtonText: '确定',
+              confirmButtonClass: 'el-button--danger',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.form.renderTemplate.objects.splice(index,1);
+            }).catch(() => {});
+          },
           create(data){
 
             if(data.status){
@@ -387,6 +411,16 @@
               delete this.form.defaultValue.headers;
             }else{
               this.form.defaultValue.code = 301;
+            }
+
+            if(this.form.renderTemplate.objects){
+              this.form.renderTemplate.objects.forEach(function (item,index) {
+
+                if(item.name !== ""){
+                  item.flatAttrs = false
+                }
+
+              })
             }
 
             ApisCreate(data).then(res=>{

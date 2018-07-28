@@ -62,7 +62,7 @@
           <el-form-item label="最大QPS" prop="maxQPS">
             <el-input  v-model.number="form.maxQPS" auto-complete="off" placeholder="请设置最大QPS（不能为0）"></el-input>
           </el-form-item>
-          <el-form-item label="健康检测机制" class="el-col-s">
+          <el-form-item label="健康检测机制(不开启则不填写即可)" class="el-col-s">
             <el-col :span="7">
               <el-input  v-model="form.heathCheck.path" auto-complete="off" placeholder="检测路径，如/ping"></el-input>
             </el-col>
@@ -75,13 +75,13 @@
               <el-input  v-model.number="form.heathCheck.timeout" auto-complete="off" placeholder="检查超时时间（纳秒）"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="熔断规则"  class="el-col-s">
+          <el-form-item label="熔断规则(不开启则不填写即可)"  class="el-col-s">
             <el-col :span="12">
               <el-input v-model.number="form.circuitBreaker.closeTimeout" auto-complete="off" placeholder="关闭检查间隔时间（纳秒）" style="margin-bottom: 10px"></el-input>
             </el-col>
             <div class="line el-col el-col-05">&nbsp</div>
             <el-col :span="11">
-              <el-input v-model.number="form.circuitBreaker.rateCheckPeriod" auto-complete="off" placeholder="熔断器检查周期（纳秒）" style="margin-bottom: 10px;width: 247px"></el-input>
+              <el-input v-model.number="form.circuitBreaker.rateCheckPeriod" auto-complete="off" placeholder="熔断器检查周期（纳秒）" style="margin-bottom: 10px;"></el-input>
             </el-col>
             <div class="line el-col el-col-05">&nbsp</div>
             <el-col :span="7">
@@ -201,6 +201,12 @@
             if(!index && !row){
               this.dialogServer = true;
             }else{
+              if(!row.heathCheck){
+                row.heathCheck = {path:'',checkInterval:'', timeout:''};
+              }
+              if(!row.circuitBreaker){
+                row.circuitBreaker = {closeTimeout:'', halfTrafficRate:'', rateCheckPeriod:'', failureRateToClose:'', succeedRateToOpen:''};
+              }
               this.form = row;
               this.dialogServer = true;
             }
@@ -254,6 +260,15 @@
             if(data.id == 0){
               delete data.id;
             }
+
+            if(this.form.heathCheck.path == "" && this.form.heathCheck.path == "" && this.form.heathCheck.checkInterval == ""){
+              delete this.form.heathCheck;
+            }
+
+            if(this.form.circuitBreaker.closeTimeout == "" && this.form.circuitBreaker.halfTrafficRate == "" && this.form.circuitBreaker.rateCheckPeriod == "" && this.form.circuitBreaker.failureRateToClose == "" && this.form.circuitBreaker.succeedRateToOpen == ""){
+              delete this.form.circuitBreaker;
+            }
+
             ServerCreate(data).then(res=>{
               if(res.data.code == 0){
                 this.form = {
