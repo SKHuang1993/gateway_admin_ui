@@ -446,6 +446,16 @@
 
         if(this.form.nodes.length == 1){
           delete this.form.renderTemplate;
+        }else{
+          if (this.form.renderTemplate.objects) {
+            this.form.renderTemplate.objects.forEach(function (item, index) {
+
+              if (item.name !== "") {
+                item.flatAttrs = false
+              }
+
+            })
+          }
         }
 
         if(this.form.defaultValue.headers[0].value == ''){
@@ -459,16 +469,6 @@
             items.defaultValue.headers = [];
           }
         })
-
-        if(this.form.renderTemplate.objects){
-          this.form.renderTemplate.objects.forEach(function (item,index) {
-
-            if(item.name !== ""){
-              item.flatAttrs = false
-            }
-
-          })
-        }
 
         ApisCreate(data).then(res=>{
           if(res.data.code === 0){

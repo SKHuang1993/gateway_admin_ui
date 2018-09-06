@@ -8,6 +8,8 @@
         <li><router-link to="/" exact><span class="title-icon el-icon-location"></span>概述</router-link></li>
         <li><router-link to="/cluster"><span class="title-icon el-icon-menu"></span>集群</router-link></li>
         <li><router-link to="/apis"><span class="title-icon el-icon-share"></span>接口</router-link></li>
+        <li><router-link to="/export"><span class="title-icon el-icon-download"></span>导出配置</router-link></li>
+        <li><router-link to="/import"><span class="title-icon el-icon-upload2"></span>导入配置</router-link></li>
       </ul>
     </el-aside>
     <router-view></router-view>

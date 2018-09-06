@@ -250,7 +250,7 @@
                     urlRewrite:'',
                     attrName:'',
                     validations:[
-                      {parameter:{name:'',source:'',index:0},required:false,rules:[]}
+                      {parameter:{name:'data',source:1,index:0},required:false,rules:[]}
                     ],
                     defaultValue:{
                       code:200,
@@ -392,6 +392,17 @@
 
             if(this.form.nodes.length == 1){
               delete this.form.renderTemplate;
+            }else{
+
+              if (this.form.renderTemplate.objects) {
+                this.form.renderTemplate.objects.forEach(function (item, index) {
+
+                  if (item.name !== "") {
+                    item.flatAttrs = false
+                  }
+
+                })
+              }
             }
 
             this.form.nodes.forEach(function (items,index) {
@@ -411,16 +422,6 @@
               delete this.form.defaultValue.headers;
             }else{
               this.form.defaultValue.code = 301;
-            }
-
-            if(this.form.renderTemplate.objects){
-              this.form.renderTemplate.objects.forEach(function (item,index) {
-
-                if(item.name !== ""){
-                  item.flatAttrs = false
-                }
-
-              })
             }
 
             ApisCreate(data).then(res=>{

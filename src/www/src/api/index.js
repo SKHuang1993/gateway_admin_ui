@@ -137,7 +137,7 @@ export function ServerDelete(id) {
 
 export function Apis() {
   return HTTP({
-    url: 'v1/apis',
+    url: 'v1/apis?limit=1000',
     method: 'GET'
   })
 }
